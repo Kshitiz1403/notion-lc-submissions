@@ -12,6 +12,7 @@ const getAllSubmissions = (offset) => {
         .then(data => data.submissions_dump)
         .then(submissions => {
             return submissions.map(({ id, lang, timestamp, status_display, runtime, memory, code, title_slug, title, url }) => {
+                title = title.trim();
                 const submissionLink = `https://leetcode.com${url}`;
                 const problemLink = `https://leetcode.com/problems/${title_slug}/`
                 return { submissionId: id, language: lang, date_of_submission: timestamp, status: status_display, runtime, memory, code, submissionLink, problemLink, title_slug, title }
@@ -28,12 +29,12 @@ const getQuestion = async (problemSlug) => {
         .then(data => data.data)
         .then(data => data.data.question)
         .then(data => {
-            const title = data['title']
+            const title = (data['title']).trim();
             const slug = data['titleSlug'];
             const difficulty = data['difficulty'];
             let topicTags = data['topicTags'];
             topicTags = topicTags.map(topic => topic.name)
-            topicTags = topicTags.filter(topic => topic!='Array')
+            topicTags = topicTags.filter(topic => topic != 'Array')
 
             return { title, slug, difficulty, topicTags }
         })
