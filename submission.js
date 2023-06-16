@@ -1,6 +1,6 @@
 require('dotenv').config()
 const { Client } = require("@notionhq/client");
-const companyProblems = require("./leetcode_company_tagged_problems.json")
+const companyProblems = require("./tags.json")
 const logger = require("./logger");
 
 const notion = new Client({
@@ -60,10 +60,10 @@ const addSubmission = async ({ submissionId, problemName, problemLink, difficult
     let previousMetadata = "";
 
     const slug = problemLink.split("/problems")[1]
-    let companies = [];
-    if (companyProblems && companyProblems[slug]) {
-        companies = companyProblems[slug];
-        companies = companies.map(company => company.company);
+    let pUrl = `https://leetcode.com/problems${slug}`;
+    let companies = companyProblems[pUrl];
+    if (companyProblems && companyProblems[pUrl]) {
+        companies = companyProblems[pUrl].slice(1);
     }
 
     if (query.results.length == 0) {
@@ -183,8 +183,11 @@ const addSubmission = async ({ submissionId, problemName, problemLink, difficult
                         text: { content: solvedOn }
                     }
                 ]
+            },
+            "Most Recent Submission":{
+                type:"number",
+                number:date_of_submission * 1000
             }
-
         }
     })
     logger.silly("--------")
