@@ -39,6 +39,9 @@ const logger = require("./logger");
                 case "mysql":
                     languageAdaptor = "sql";
                     break
+                case "golang":
+                    languageAdaptor = "go"
+                    break
                 default:
                     languageAdaptor = result.language;
             }
