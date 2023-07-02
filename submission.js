@@ -61,7 +61,7 @@ const addSubmission = async ({ submissionId, problemName, problemLink, difficult
 
     const slug = problemLink.split("/problems")[1]
     let pUrl = `https://leetcode.com/problems${slug}`;
-    let companies = companyProblems[pUrl];
+    let companies = companyProblems[pUrl] || [];
     if (companyProblems && companyProblems[pUrl]) {
         companies = companyProblems[pUrl].slice(1);
     }

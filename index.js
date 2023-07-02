@@ -1,19 +1,19 @@
+require("dotenv").config()
 const { getAllSubmissions, getQuestion } = require("./lc");
 const axios = require("axios").default
 const fs = require("fs")
-let addSubmission;
 const logger = require("./logger");
 
 (async () => {
-    
+
     let data = (await axios.get('https://raw.githubusercontent.com/ssavi-ict/LeetCode-Which-Company/main/data/company_info.json')).data;
     fs.writeFileSync("tags.json", JSON.stringify(data))
 
     const runs = [
         0
     ]
-    
-    addSubmission = require("./submission")
+
+    let addSubmission = require("./submission");
 
     for await (let run of runs) {
 
