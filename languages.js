@@ -28,8 +28,8 @@ const sleep = async (duration) => {
 };
 (async () => {
   let offset = fs.existsSync("./lastExecution.txt")? parseInt(fs.readFileSync("./lastExecution.txt")) : 0;
-  fs.writeFileSync("./lastExecution.txt", offset.toString());
   while (true) {
+    fs.writeFileSync("./lastExecution.txt", offset.toString());
     const submissions = await getBasicAllSubmissions(offset);
     if (submissions.length == 0) break;
     for await (let sub of submissions) {
