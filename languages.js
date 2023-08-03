@@ -17,6 +17,14 @@ let totalUpdated = 0;
     let pUrl = `https://leetcode.com/problems${slug}`;
  * 
  */
+
+const sleep = async (duration) => {
+  return new Promise((res, rej) => {
+    setTimeout(() => {
+      return res();
+    }, duration);
+  });
+};
 (async () => {
   let offset = 0;
   while (true) {
@@ -58,6 +66,7 @@ let totalUpdated = 0;
         },
       });
     }
+    sleep(2000)
     offset += 20;
     console.log("Offset- ", offset);
   }
