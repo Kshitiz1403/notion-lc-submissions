@@ -21,7 +21,7 @@ let totalUpdated = 0;
 
 const sleep = async (duration) => {
   return new Promise((res, rej) => {
-    setTimeout(() => {
+    return setTimeout(() => {
       return res();
     }, duration);
   });
