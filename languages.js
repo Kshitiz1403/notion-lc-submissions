@@ -56,7 +56,7 @@ const sleep = async (duration) => {
         return { name: getLanguageAdaptor(r) };
       });
 
-      notion.pages.update({
+      await notion.pages.update({
         page_id,
         properties: {
           Languages: {
