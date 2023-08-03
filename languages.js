@@ -3,6 +3,7 @@ const { Client } = require("@notionhq/client");
 const companyProblems = require("./tags.json");
 const { getBasicAllSubmissions } = require("./lc");
 const { getLanguageAdaptor } = require("./languageAdaptor");
+const fs = require("fs");
 
 const notion = new Client({
   auth: process.env.NOTION_TOKEN,
@@ -26,7 +27,8 @@ const sleep = async (duration) => {
   });
 };
 (async () => {
-  let offset = 0;
+  let offset = parseInt(fs.existsSync("./lastExecution.txt") && fs.readFileSync("./lastExecution.txt")) || 0;
+  fs.writeFileSync("./lastExecution.txt", offset.toString());
   while (true) {
     const submissions = await getBasicAllSubmissions(offset);
     if (submissions.length == 0) break;
@@ -66,7 +68,7 @@ const sleep = async (duration) => {
         },
       });
     }
-    sleep(2000)
+    sleep(2000);
     offset += 20;
     console.log("Offset- ", offset);
   }
