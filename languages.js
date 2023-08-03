@@ -4,6 +4,7 @@ const companyProblems = require("./tags.json");
 const { getBasicAllSubmissions } = require("./lc");
 const { getLanguageAdaptor } = require("./languageAdaptor");
 const fs = require("fs");
+const { sleep } = require("./sleep");
 
 const notion = new Client({
   auth: process.env.NOTION_TOKEN,
@@ -19,13 +20,7 @@ let totalUpdated = 0;
  * 
  */
 
-const sleep = async (duration) => {
-  return new Promise((res, rej) => {
-    return setTimeout(() => {
-      return res();
-    }, duration);
-  });
-};
+
 (async () => {
   let offset = fs.existsSync("./lastExecution.txt")? parseInt(fs.readFileSync("./lastExecution.txt")) : 0;
   while (true) {
