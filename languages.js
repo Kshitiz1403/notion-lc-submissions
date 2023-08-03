@@ -68,7 +68,7 @@ const sleep = async (duration) => {
         },
       });
     }
-    sleep(2000);
+    await sleep(2000);
     offset += 20;
     console.log("Offset- ", offset);
   }
