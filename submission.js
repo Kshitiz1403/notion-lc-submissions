@@ -58,6 +58,8 @@ const addSubmission = async ({ submissionId, problemName, problemLink, difficult
 
     let page_id;
     let previousMetadata = "";
+    let previousLanguages = []
+    let newLanguages = [language]
 
     const slug = problemLink.split("/problems")[1]
     let pUrl = `https://leetcode.com/problems${slug}`;
@@ -103,6 +105,10 @@ const addSubmission = async ({ submissionId, problemName, problemLink, difficult
                     multi_select: companies.map(company => {
                         return { name: company }
                     })
+                },
+                Languages:{
+                    type:"multi_select",
+                    multi_select: [{name:language}]
                 }
             },
             parent: { type: 'database_id', database_id: DB_ID }
@@ -111,6 +117,8 @@ const addSubmission = async ({ submissionId, problemName, problemLink, difficult
 
     } else {
         page_id = query.results[0].id;
+        previousLanguages = query.results[0].properties.Languages.multi_select.map(r => r.name) || [];
+        newLanguages = [...previousLanguages, language];
         previousMetadata = query.results[0].properties.Metadata.rich_text[0].text.content;
     }
 
@@ -187,6 +195,10 @@ const addSubmission = async ({ submissionId, problemName, problemLink, difficult
             "Most Recent Submission":{
                 type:"number",
                 number:date_of_submission * 1000
+            },
+            "Languages":{
+                type:"multi_select",
+                multi_select:  newLanguages.map(r => ({name:r}))
             }
         }
     })
